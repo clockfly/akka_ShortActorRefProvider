@@ -38,7 +38,9 @@ How to use it?
    source ! aliasActorRef
    ```
 4. In source ator, it need to record the aliasActorRef of target actor. When it need to send message to target actor, it need to use this aliasActorRef.
-
+  ```
+  aliasActorRef.tell("message", ActorRef.noSender)
+  ```
 
 Where it akka hacking happen?
 ==================================
