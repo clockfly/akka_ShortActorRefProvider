@@ -22,10 +22,19 @@ Check https://groups.google.com/forum/#!topic/akka-user/Pf4lInh8oPc for the back
 
 How to use it?
 ==================================
-1. First, you need to configure the akka.actor.provider = "akka.remote.AliasRemoteActorRefProvider"
-2. After that, the target actor(the target you want to send message to) need to call val aliasActorRef = context.provider.asInstanceOf[AliasActorRefProvider].getAliasActorRef to get a alias ActorRef.
+1. First, you need to configure the 
+  ```bash
+  akka.actor.provider = "akka.remote.AliasRemoteActorRefProvider"
+  ``` 
+2. After that, the target actor(the target you want to send message to) need to call 
+  ```bash
+  val aliasActorRef = context.provider.asInstanceOf[AliasActorRefProvider].getAliasActorRef
+  ··· 
+  to get a alias ActorRef.
 3. Then the target actor actor(the target you want to send message to) need to pass the aliasActorRef to source actor(which send message), like this
-source ! aliasActorRef
+   ```bash
+   source ! aliasActorRef
+   ```
 4. In source ator, it need to record the aliasActorRef of target actor. When it need to send message to target actor, it need to use this aliasActorRef.
 
 
@@ -38,7 +47,9 @@ The latter will only serialze the shortten alias path when transfer through netw
 after shortten, the path looks like "s://s<id>", the id will map to a unique Actor in current ActorSystem.
 
 2. The second hack lies in RemoteActorRefProvider.resolveActorRefWithLocalAddress. It will use implementation of AliasRemoteActorRefProvider instead.
-In the hacked version, AliasRemoteActorRefProvider.resolveActorRefWithLocalAddress will parse the short version of ActorPath, resolve it to a full ActorPath in current ActorSystem, and return.
+In the hacked version, AliasRemoteActorRefProvider.resolveActorRefWithLocalAddress will parse the short version of ActorPath, resolve it to a full ActorPath in current ActorSystem. 
+
+
 
 
 
