@@ -4,6 +4,7 @@ AliasActorRefProvider
 This is a extension to Akka. The purpose is to reduce the message payload when sending a message across network.
 
 Currently in akka(2.3.4), when you want to send a message across network, it will contains at least three part:
+
 1. Sender ActorRef Path
 2. Receiver ActorRef Path
 3. Message payload.
@@ -12,7 +13,9 @@ For sender and receiver actorRef path, each will take around 100 bytes - 200 byt
 
 There is an option to configure not sending sender address, actorRef.tell(msg, ActorRef.noSender), however, it is not available at framework level to shortten the receiver ActorRef path.
 
+
 The code example provided here shows a way to hack akka framework to reduce the reciever ActorRef overhead. After the hack, the receiver ActorRef path will only take about 10 bytes.
+
 
 Check https://groups.google.com/forum/#!topic/akka-user/Pf4lInh8oPc for the background story and discussions.
 
