@@ -46,12 +46,12 @@ Where it akka hacking happen?
 ==================================
 There are two places
 
-1. Hack ActorPath.toSerializationFormat with AliasActorPath
-The latter will only serialze the shortten alias path when transfer through network. For example, the original path may be： akka://sytem@ip:port/user/.../myActorName, 
-after shortten, the path looks like "s://s<id>", the id will map to a unique Actor in current ActorSystem.
+1. Hack ```ActorPath.toSerializationFormat``` with ```AliasActorPath```
+The latter will only serialze the shortten alias path when transfer through network. For example, the original path may be：``` akka://sytem@ip:port/user/.../myActorName```, 
+after shortten, the path looks like ```"s://s<id>"```, the id will map to a unique Actor in current ActorSystem.
 
-2. The second hack lies in RemoteActorRefProvider.resolveActorRefWithLocalAddress. It will use implementation of AliasRemoteActorRefProvider instead.
-In the hacked version, AliasRemoteActorRefProvider.resolveActorRefWithLocalAddress will parse the short version of ActorPath, resolve it to a full ActorPath in current ActorSystem. 
+2. The second hack lies in ```RemoteActorRefProvider.resolveActorRefWithLocalAddress```. It will use implementation of AliasRemoteActorRefProvider instead.
+In the hacked version,``` AliasRemoteActorRefProvider.resolveActorRefWithLocalAddress``` will parse the short version of ActorPath, resolve it to a full ActorPath in current ActorSystem. 
 
 
 
