@@ -31,7 +31,7 @@ How to use it?
 2. After that, the target actor(the target you want to send message to) need to call 
   ```
   val aliasActorRef = context.provider.asInstanceOf[AliasActorRefProvider].getAliasActorRef
-  ··· 
+  ``` 
   to get a alias ActorRef.
 3. Then the target actor actor(the target you want to send message to) need to pass the aliasActorRef to source actor(which send message), like this
    ```
