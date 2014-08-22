@@ -1,4 +1,4 @@
-Akka AliasActorRefProvider
+Akka remoting AliasActorRefProvider
 ==================================
 
 The purpose is to reduce the akka message overhead when sending a message across network.
