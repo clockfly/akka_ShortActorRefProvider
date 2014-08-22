@@ -1,4 +1,4 @@
-AliasActorRefProvider
+AKKA AliasActorRefProvider
 ==================================
 
 This is a extension to Akka. The purpose is to reduce the message payload when sending a message across network.
@@ -42,7 +42,7 @@ How to use it?
   aliasActorRef.tell("message", ActorRef.noSender)
   ```
 
-Where it akka hacking happen?
+Where it the hacking happen?
 ==================================
 There are two places
 
