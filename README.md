@@ -1,7 +1,7 @@
 Akka AliasActorRefProvider
 ==================================
 
-The purpose is to reduce the message payload when sending a message across network.
+The purpose is to reduce the akka message overhead when sending a message across network.
 
 Currently in akka 2.3.4, when you want to send a message across network, it will contains at least three part:
 
@@ -9,12 +9,10 @@ Currently in akka 2.3.4, when you want to send a message across network, it will
 2. Receiver ActorRef Path
 3. Message payload.
 
-For sender and receiver actorRef path, each will take around 100 bytes - 200 bytes for network, this is not trivival network overhead.
-
-There is an option to configure not sending sender address, ```actorRef.tell(msg, ActorRef.noSender)```, however, it is not available at framework level to shortten the receiver ActorRef path.
+For sender and receiver actorRef path, each will take around 100 bytes - 200 bytes for network, this is not trivival network overhead. There is an option to configure not sending sender address, ```actorRef.tell(msg, ActorRef.noSender)```, however, there is no option to short the receiver ActorRef path currently. 
 
 
-The code example provided here shows a way to hack akka framework to reduce the reciever ActorRef overhead. After the hack, the receiver ActorRef path will only take about 10 bytes.
+The code here shows a way to hack akka framework to reduce the reciever ActorRef overhead. After the hack, the receiver ActorRef path will only take about 10 bytes.
 
 
 Check https://groups.google.com/forum/#!topic/akka-user/Pf4lInh8oPc for the background story and discussions.
@@ -23,21 +21,28 @@ Check https://groups.google.com/forum/#!topic/akka-user/Pf4lInh8oPc for the back
 How to use it?
 ==================================
 
-1. First, you need to configure the 
+1. sbt package to build the jar
+
+2. then, you need to configure in application.conf 
 
   ```
   akka.actor.provider = "akka.remote.AliasRemoteActorRefProvider"
   ``` 
 2. After that, the target actor(the target you want to send message to) need to call 
+
   ```
   val aliasActorRef = context.provider.asInstanceOf[AliasActorRefProvider].getAliasActorRef
   ``` 
   to get a alias ActorRef.
+
 3. Then the target actor actor(the target you want to send message to) need to pass the aliasActorRef to source actor(which send message), like this
+
    ```
    source ! aliasActorRef
    ```
+
 4. In source ator, it need to record the aliasActorRef of target actor. When it need to send message to target actor, it need to use this aliasActorRef.
+
   ```
   aliasActorRef.tell("message", ActorRef.noSender)
   ```
