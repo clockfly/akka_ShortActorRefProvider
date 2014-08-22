@@ -22,17 +22,19 @@ Check https://groups.google.com/forum/#!topic/akka-user/Pf4lInh8oPc for the back
 
 How to use it?
 ==================================
+
 1. First, you need to configure the 
-  ```bash
+
+  ```
   akka.actor.provider = "akka.remote.AliasRemoteActorRefProvider"
   ``` 
 2. After that, the target actor(the target you want to send message to) need to call 
-  ```bash
+  ```
   val aliasActorRef = context.provider.asInstanceOf[AliasActorRefProvider].getAliasActorRef
   ··· 
   to get a alias ActorRef.
 3. Then the target actor actor(the target you want to send message to) need to pass the aliasActorRef to source actor(which send message), like this
-   ```bash
+   ```
    source ! aliasActorRef
    ```
 4. In source ator, it need to record the aliasActorRef of target actor. When it need to send message to target actor, it need to use this aliasActorRef.
